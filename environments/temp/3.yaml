@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-endpoint 
+  namespace: prod
+type: Opaque
+stringData:
+  db_host: demodb.cyreqeaskewr.us-east-1.rds.amazonaws.com
