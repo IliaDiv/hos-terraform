@@ -1,15 +1,15 @@
 variable "vpc_id" {
-    type = string
+  type = string
 }
 
 variable "cluster_name" {
-    type = string
+  type = string
 }
 
 variable "rds_endpoint" {
-    type = string
+  type = string
 }
 
 variable "lbc_alb_sg" {
-    type = list(string)
+  type = list(string)
 }

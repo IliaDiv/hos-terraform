@@ -10,6 +10,7 @@ resource "kubernetes_namespace" "dev" {
   timeouts {
     delete = "10m"
   }
+  depends_on = [helm_release.argocd, helm_release.aws_lbc]
 }
 
 resource "kubernetes_namespace" "staging" {
@@ -17,9 +18,10 @@ resource "kubernetes_namespace" "staging" {
     name = "staging"
   }
 
-    timeouts {
+  timeouts {
     delete = "10m"
   }
+  depends_on = [helm_release.argocd, helm_release.aws_lbc]
 }
 
 resource "kubernetes_namespace" "prod" {
@@ -27,9 +29,10 @@ resource "kubernetes_namespace" "prod" {
     name = "prod"
   }
 
-    timeouts {
+  timeouts {
     delete = "10m"
   }
+  depends_on = [helm_release.argocd, helm_release.aws_lbc]
 }
 
 resource "kubernetes_secret" "db_endpoint_dev" {
@@ -39,8 +42,10 @@ resource "kubernetes_secret" "db_endpoint_dev" {
   }
 
   data = {
-    db_host     = local.db_host
+    db_host = local.db_host
   }
+
+  depends_on = [kubernetes_namespace.dev]
 }
 
 resource "kubernetes_secret" "db_endpoint_staging" {
@@ -50,8 +55,10 @@ resource "kubernetes_secret" "db_endpoint_staging" {
   }
 
   data = {
-    db_host     = local.db_host
+    db_host = local.db_host
   }
+
+  depends_on = [kubernetes_namespace.staging]
 }
 
 resource "kubernetes_secret" "db_endpoint_prod" {
@@ -61,6 +68,8 @@ resource "kubernetes_secret" "db_endpoint_prod" {
   }
 
   data = {
-    db_host     = local.db_host
+    db_host = local.db_host
   }
+
+  depends_on = [kubernetes_namespace.prod]
 }

@@ -1,8 +1,8 @@
 provider "aws" {
-    region = "us-east-1"
-    assume_role {
-      role_arn     = "arn:aws:iam::337909746080:role/hos-terraform"
-      session_name = "terraform"
+  region = "us-east-1"
+  assume_role {
+    role_arn     = "arn:aws:iam::${var.aws_account_id}:role/hos-terraform"
+    session_name = "terraform"
   }
 }
 
@@ -30,17 +30,17 @@ provider "helm" {
 
 
 terraform {
- required_providers {
+  required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 6.0"
     }
-    
+
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = "~> 1.19"
     }
- }
+  }
 }
 
 ##############################################################################################
@@ -49,9 +49,9 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket = "home-office-store-infrastracture"
-    key    = "terraform/dev"
-    region = "us-east-1"
+    bucket       = "home-office-store-infrastracture"
+    key          = "terraform/dev"
+    region       = "us-east-1"
     use_lockfile = true
   }
 }

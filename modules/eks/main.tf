@@ -9,10 +9,10 @@ module "eks" {
   name               = var.eks_name
   kubernetes_version = var.kubernetes_version
 
-    access_entries = {
+  access_entries = {
     # One access entry with a policy associated
     localadmin = {
-      principal_arn = "arn:aws:iam::337909746080:user/localadmin"
+      principal_arn = "arn:aws:iam::${var.aws_account_id}:user/localadmin"
 
       policy_associations = {
         example = {
@@ -25,45 +25,45 @@ module "eks" {
     }
   }
 
-  endpoint_public_access = true
+  endpoint_public_access                   = true
   enable_cluster_creator_admin_permissions = true
 
   addons = {
-    coredns                = {}
+    coredns = {}
     eks-pod-identity-agent = {
       before_compute = true
     }
-    kube-proxy             = {}
-    vpc-cni                = {
+    kube-proxy = {}
+    vpc-cni = {
       before_compute = true
     }
   }
 
   eks_managed_node_groups = {
-  default = {
-    min_size     = 1
-    max_size     = 2
-    desired_size = 1
+    default = {
+      min_size     = 1
+      max_size     = 2
+      desired_size = 1
 
-    ami_type       = "AL2023_x86_64_STANDARD"
-    instance_types   = ["t3.large"] 
+      ami_type       = "AL2023_x86_64_STANDARD"
+      instance_types = ["t3.large"]
 
-    iam_role_attach_cni_policy = true
+      iam_role_attach_cni_policy = true
 
-    vpc_security_group_ids = [
+      vpc_security_group_ids = [
         var.node_security_group_id
       ]
-    
-    timeouts = {
+
+      timeouts = {
         create = "25m"
         update = "25m"
         delete = "25m"
       }
+    }
   }
-}
 
-  vpc_id     = var.vpc_id
-  subnet_ids = var.eks_subnet_ids
+  vpc_id                   = var.vpc_id
+  subnet_ids               = var.eks_subnet_ids
   control_plane_subnet_ids = var.eks_subnet_ids
 
   tags = var.eks_tags

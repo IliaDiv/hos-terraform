@@ -47,19 +47,19 @@ resource "aws_security_group" "eks_nodes_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description      = "Allow traffic from ALB"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.alb_sg.id]
+    description     = "Allow traffic from ALB"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   ingress {
-    description      = "Allow HTTPS traffic from ALB"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.alb_sg.id]
+    description     = "Allow HTTPS traffic from ALB"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
@@ -80,11 +80,11 @@ resource "aws_security_group" "rds_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description      = "PostgreSQL access from EKS nodes"
-    from_port        = 5432
-    to_port          = 5432
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.eks_nodes_sg.id]
+    description     = "PostgreSQL access from EKS nodes"
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.eks_nodes_sg.id]
   }
 
   egress {

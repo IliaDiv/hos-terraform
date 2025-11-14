@@ -11,5 +11,5 @@ resource "helm_release" "argocd" {
   create_namespace = true
   version          = "8.5.8"
   # values = [file("values/argocd.yaml")]
-  depends_on = [ helm_release.aws_lbc ]
+  depends_on = [helm_release.aws_lbc]
 }
