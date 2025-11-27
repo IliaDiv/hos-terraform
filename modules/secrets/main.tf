@@ -59,7 +59,7 @@ resource "time_sleep" "wait_for_crds" {
     helm_release.secrets_store_csi_driver,
     helm_release.csi_driver_aws_provider
   ]
-  create_duration = "90s"
+  create_duration = "250s"
 }
 
 ##############################################################################################
@@ -122,6 +122,7 @@ resource "aws_iam_role_policy_attachment" "esrrs" {
 
 # SecretProviderClass
 resource "null_resource" "secret_provider_class_n8n" {
+  
   provisioner "local-exec" {
     command = <<-EOT
       kubectl apply -f - <<EOF
@@ -155,7 +156,7 @@ resource "null_resource" "secret_provider_class_n8n" {
     namespace      = "dev"
   }
 
-  depends_on = [time_sleep.wait_for_crds]
+  depends_on = [time_sleep.wait_for_crds, helm_release.csi_driver]
 }
 
 # ServiceAccount
