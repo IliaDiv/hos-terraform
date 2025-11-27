@@ -156,7 +156,7 @@ resource "null_resource" "secret_provider_class_n8n" {
     namespace      = "dev"
   }
 
-  depends_on = [time_sleep.wait_for_crds, helm_release.csi_driver]
+  depends_on = [time_sleep.wait_for_crds]
 }
 
 # ServiceAccount

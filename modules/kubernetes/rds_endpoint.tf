@@ -6,9 +6,9 @@ resource "kubernetes_namespace" "dev" {
   metadata {
     name = "dev"
   }
-
-  timeouts {
-    delete = "10m"
+  
+  lifecycle {
+    prevent_destroy = true
   }
   depends_on = [helm_release.argocd, helm_release.aws_lbc]
 }
@@ -18,8 +18,8 @@ resource "kubernetes_namespace" "staging" {
     name = "staging"
   }
 
-  timeouts {
-    delete = "10m"
+  lifecycle {
+    prevent_destroy = true
   }
   depends_on = [helm_release.argocd, helm_release.aws_lbc]
 }
@@ -29,8 +29,8 @@ resource "kubernetes_namespace" "prod" {
     name = "prod"
   }
 
-  timeouts {
-    delete = "10m"
+  lifecycle {
+    prevent_destroy = true
   }
   depends_on = [helm_release.argocd, helm_release.aws_lbc]
 }
